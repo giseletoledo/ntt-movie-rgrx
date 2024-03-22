@@ -1,0 +1,39 @@
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.3/font/bootstrap-icons.css");
+
+.favorite-icon {
+  font-size: 24px;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.favorite-icon .bi {
+  font-family: 'bootstrap-icons';
+  color: red;
+  font-size: 24px;
+  content: '\e003'; 
+  animation: pulse 0.5s linear;
+}
+
+.bi-heart-fill::before {
+  content: "\f415";
+  animation: pulse 0.5s linear;
+}
+
+.favorite-icon.isFavorite .bi {
+  color: red;
+  content: '\e005'; /* código do ícone de favorito */
+}
+
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.3);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

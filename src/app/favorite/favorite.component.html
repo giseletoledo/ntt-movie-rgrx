@@ -1,0 +1,8 @@
+<!-- favorite.component.html -->
+<span class="favorite-icon d-flex justify-content-end" (click)="toggleFavorite()">
+    <i class="bi" [ngClass]="{'bi-heart-fill': isFavorite, 'bi-heart': !isFavorite}"></i>
+    <span *ngIf="isFavorite"> ({{ imdbID }}) </span>
+</span>
+
+  
+  

@@ -1,0 +1,14 @@
+.card{
+    margin: 0 auto;
+    padding: 4px;
+}
+
+.movie-title{
+    text-align: center;
+    font-weight: bold;
+    color: crimson;
+} 
+
+.card img {
+    padding: 8px;
+}
