@@ -7,7 +7,7 @@ import { HeaderComponent } from './header/header.component';
 import { ContentComponent } from './content/content.component';
 import { CardComponent } from './card/card.component';
 import { FooterComponent } from './footer/footer.component';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MovieDetailComponent } from './movie-detail/movie-detail.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
@@ -18,6 +18,7 @@ import { StoreModule } from '@ngrx/store';
 import { reducers } from './app.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { MovieEffects } from './movie.effects';
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,12 @@ import { MovieEffects } from './movie.effects';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     StoreModule.forRoot(reducers),
+    StoreDevtoolsModule.instrument({
+     name: 'NgRx NTTMOVIE',
+   }),
+
     EffectsModule.forRoot([MovieEffects]),
   ],
   providers: [

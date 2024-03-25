@@ -1247,6 +1247,7 @@ function createReducer(initialState, ...ons) {
 }
 
 export {
+  toSignal,
   createAction,
   props,
   union,
@@ -1304,4 +1305,4 @@ export {
    * License: MIT
    *)
 */
-//# sourceMappingURL=chunk-AXOJUAFP.js.map
+//# sourceMappingURL=chunk-PK3ODNAJ.js.map
