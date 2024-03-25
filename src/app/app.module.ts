@@ -15,6 +15,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { FavoriteComponent } from './favorite/favorite.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { ContentgroupComponent } from './contentgroup/contentgroup.component';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [
@@ -32,7 +33,10 @@ import { ContentgroupComponent } from './contentgroup/contentgroup.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    MatDialogModule
+    StoreModule.forRoot({
+      movies: moviesReducer,
+      favorites: favoritesReducer
+    }),
   ],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},
