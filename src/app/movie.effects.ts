@@ -17,7 +17,11 @@ export class MovieEffects {
       ofType(loadMovies),
       switchMap(action =>
         this.movieService.getMovieByTitle(action.title).pipe(
-          map(movies => loadMoviesSuccess({ movies })),
+          map(movies => {
+            console.log(movies)
+            return loadMoviesSuccess({ movies });
+        }
+          ),
           catchError(error => of(loadMoviesFailure({ error })))
         )
       )

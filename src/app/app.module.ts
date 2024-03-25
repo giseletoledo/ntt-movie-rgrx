@@ -16,6 +16,8 @@ import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { ContentgroupComponent } from './contentgroup/contentgroup.component';
 import { StoreModule } from '@ngrx/store';
 import { reducers } from './app.reducer';
+import { EffectsModule } from '@ngrx/effects';
+import { MovieEffects } from './movie.effects';
 
 @NgModule({
   declarations: [
@@ -34,6 +36,7 @@ import { reducers } from './app.reducer';
     HttpClientModule,
     FormsModule,
     StoreModule.forRoot(reducers),
+    EffectsModule.forRoot([MovieEffects]),
   ],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},
