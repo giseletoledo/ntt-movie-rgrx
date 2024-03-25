@@ -1,14 +1,16 @@
-import { MemoizedSelector, createFeatureSelector, createSelector } from '@ngrx/store';
+import { createFeatureSelector, createSelector } from '@ngrx/store';
 import { AppState } from './app.reducer';
 import { MoviesState } from './movies.reducer';
-import { Movie } from './core/movie';
 
-export const selectMoviesState: MemoizedSelector<AppState, MoviesState> = createFeatureSelector<MoviesState>('movies');
+// Primeiro, criamos um seletor de feature para a parte do estado relacionada aos filmes
+export const selectMoviesState = createFeatureSelector<AppState, MoviesState>('movies');
 
-export const selectAllMovies: MemoizedSelector<AppState, Movie[]> = createSelector(
-    selectMoviesState,
-    (state: MoviesState) => state.movies  // Return the movies array
+// Em seguida, criamos o seletor para extrair a lista de filmes do estado dos filmes
+export const selectMovies = createSelector(
+  selectMoviesState,
+  (state: MoviesState) => state.movies
 );
+
 
 
 
