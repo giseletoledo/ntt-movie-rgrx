@@ -4,7 +4,7 @@
             <input class="form-control me-2" type="search" placeholder="Procurar filmes" aria-label="Search" [(ngModel)]="movieTitle" name="movieTitle">
             <button class="btn btn-danger" type="submit">Search</button>
         </form>
-        <button class="btn btn-primary mb-3" (click)="toggleFavoritesFilter()">
+        <button class="btn btn-primary mb-3 mt-3" (click)="toggleFavoritesFilter()">
             <i class="bi" [ngClass]="{'bi-heart-fill': isFilterActive, 'bi-heart': !isFilterActive}"></i>
             {{ isFilterActive ? 'Remover Filtro de Favoritos' : 'Filtrar por Favoritos' }}
         </button>
