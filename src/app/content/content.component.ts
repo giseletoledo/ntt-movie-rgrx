@@ -1,7 +1,9 @@
-import { Component, EventEmitter, Output } from '@angular/core';
 import { Movie } from '../core/movie';
-import { MovieService } from '../movie.service';
-import { FavoritesService } from '../favorites.service';
+import { Observable } from 'rxjs';
+import { Store, select } from '@ngrx/store';
+import { selectAllMovies } from '../movies.selectors';
+import { loadMovies } from '../movies.actions';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-content',
@@ -9,47 +11,32 @@ import { FavoritesService } from '../favorites.service';
   styleUrl: './content.component.css'
 })
 export class ContentComponent {
-  movies: Movie[] = [];
+  movies$: Observable<Movie[]> | undefined;
+  displayMovies$: Observable<Movie[]> | undefined;
   movieTitle: string = ''; 
-  movieDescription: string = ''; 
-  defaultPosterUrl: string = 'assets/default-poster.png'; 
   isFilterActive: boolean = false;
-  displayMovies: Movie[] = [];
-  
-  constructor(private movieService: MovieService, private favoritesService: FavoritesService) { }
+
+  constructor(private store: Store) { }
 
   ngOnInit(): void {
-    this.fetchMovie();
+    this.fetchMovies();
+    this.movies$ = this.store.pipe(select(selectAllMovies));
+
+    this.displayMovies$ = this.store.pipe(select(selectFavoriteMovies));
   }
   
-  fetchMovie(): void {
+  fetchMovies(): void {
     if (this.movieTitle) {
-      this.movieService.getMovieByTitle(this.movieTitle).subscribe(
-        movies => {
-          this.movies = movies ? movies.map(movie => ({
-            ...movie,
-            Poster: movie.Poster !== 'N/A' ? movie.Poster : this.defaultPosterUrl
-          })) : [];
-          this.updateDisplayMovies();
-        },
-        error => {
-          console.error('Erro ao buscar filmes:', error);
-        }
-      );
-    }
-  }
-
-  updateDisplayMovies(): void {
-    if (this.isFilterActive) {
-      const favoriteIDs = this.favoritesService.getFavoriteIDs();
-      this.displayMovies = this.movies.filter(movie => favoriteIDs.includes(movie.imdbID));
-    } else {
-      this.displayMovies = this.movies;
+      this.store.dispatch(loadMovies({ title: this.movieTitle }));
     }
   }
 
   toggleFavoritesFilter(): void {
     this.isFilterActive = !this.isFilterActive;
-    this.updateDisplayMovies();
   }
 }
+
+function selectFavoriteMovies(state: object): Movie[] {
+  throw new Error('Function not implemented.');
+}
+

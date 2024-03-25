@@ -1,6 +1,6 @@
 <div class="container mt-5">
     <div class="mb-3 col-lg-12 col-md-12">
-        <form class="d-flex" (submit)="fetchMovie()">
+        <form class="d-flex" (submit)="fetchMovies()">
             <input class="form-control me-2" type="search" placeholder="Procurar filmes" aria-label="Search" [(ngModel)]="movieTitle" name="movieTitle">
             <button class="btn btn-danger" type="submit">Search</button>
         </form>
@@ -11,7 +11,7 @@
         
     </div>
     <div class="row">
-        <div class="col-lg-3 col-md-6 col-sm-12" *ngFor="let movie of displayMovies">
+        <div class="col-lg-3 col-md-6 col-sm-12" *ngFor="let movie of displayMovies$ | async">
             <app-card [movie]="movie" [imageUrl]="movie.Poster" [title]="movie.Title" [year]="movie.Year"></app-card>
         </div>
     </div>

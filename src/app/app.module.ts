@@ -15,9 +15,7 @@ import { FavoriteComponent } from './favorite/favorite.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { ContentgroupComponent } from './contentgroup/contentgroup.component';
 import { StoreModule } from '@ngrx/store';
-import { moviesReducer } from './movies.reducer';
-import { favoritesReducer } from './favorites.reducer';
-
+import { reducers } from './app.reducer';
 
 @NgModule({
   declarations: [
@@ -35,10 +33,7 @@ import { favoritesReducer } from './favorites.reducer';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    StoreModule.forRoot({
-      movies: moviesReducer,
-      favorites: favoritesReducer
-    }),
+    StoreModule.forRoot(reducers),
   ],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},
