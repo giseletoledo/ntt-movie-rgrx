@@ -1,12 +1,12 @@
 import { Movie } from '../core/movie';
 import { Observable, debounceTime, distinctUntilChanged } from 'rxjs';
-import { Store, select } from '@ngrx/store';
 import { Component, OnInit } from '@angular/core';
 import { FavoritesService } from '../favorites.service';
 import { selectFavoriteMovies } from '../favorites.selectors';
 import { AppState } from '../app.reducer';
 import { loadMovies } from '../movies.actions';
 import { FormControl } from '@angular/forms';
+import { select, Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-content',
