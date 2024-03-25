@@ -19,6 +19,7 @@ import { reducers } from './app.reducer';
 import { EffectsModule } from '@ngrx/effects';
 import { MovieEffects } from './movie.effects';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { FavoritesEffects } from './favorites.effects';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
    }),
 
     EffectsModule.forRoot([MovieEffects]),
+    EffectsModule.forRoot([FavoritesEffects]),
   ],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},
