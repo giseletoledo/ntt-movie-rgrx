@@ -18,27 +18,27 @@ export class MovieService {
 
   constructor(private http: HttpClient) { }
 
-  getMovieByTitle(query: string): Observable<Movie[]> {
-    const url = `${this.apiUrl}?s=${query}&apikey=${this.apiKey}`;
+  getMovieByTitle(title: string): Observable<Movie[]> {
+    const url = `${this.apiUrl}?s=${title}&apikey=${this.apiKey}`;
   
-    return this.http.get<MovieApiResponse>(url).pipe(
-      map(response => {
-        return response.Search; 
-      }),
+    return this.http.get<any>(url).pipe(
+      map(response => response.Search || []),
       catchError(error => {
         console.error('An error occurred:', error);
-        throw new Error('Erro na solicitação da API');
+        throw new Error('Error fetching movies');
       })
     );
   }
+
   getMovieDetails(imdbID: string): Observable<Movie> {
     const url = `${this.apiUrl}?apikey=${this.apiKey}&i=${imdbID}`;
     return this.http.get<Movie>(url).pipe(
-      catchError((error) => {
-        console.error('Ocorreu um erro:', error);
-        throw 'Erro na solicitação da API'; 
+      catchError(error => {
+        console.error('An error occurred:', error);
+        throw new Error('Error fetching movie details');
       })
     );
   }
+
 }
 
