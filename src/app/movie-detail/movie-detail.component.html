@@ -1,15 +1,22 @@
-  <div *ngIf="movie">
-    <div class="card col-md-4 mt-4">
-      <h1 class="movie-title">{{movie.Title | uppercase}}</h1>
-    <div class="d-flex flex-row mb-3">
-      <img [src]="movie.Poster" alt="{{ movie.Title }} Poster" class="card-img-top">
-      <div class="card-body">
-        <p class="card-text"><b>Movie id:</b> {{movie.imdbID}}</p>
-        <p class="card-text"><b>Year:</b> {{ movie.Year }}</p>
-        <p class="card-text"><b>Genre:</b> {{ movie.Genre }}</p>
-        <p class="card-text"><b>Plot:</b> {{ movie.Plot }}</p>
+<div *ngIf="movie">
+  <div class="card mb-3 mt-4">
+      <div class="card-header">
+        <h1 class="movie-title">{{movie.Title | uppercase}}</h1>
       </div>
-    </div>
+    <div class="row g-0">
+      <div class="col-md-4">
+        <img [src]="movie.Poster" alt="{{ movie.Title }} Poster" class="card-img-top img-fluid">
+      </div>
+      <div class="col-md-8">
+        <div class="card-body">
+          <p class="card-text"><b>Movie id:</b> {{movie.imdbID}}</p>
+          <p class="card-text"><b>Year:</b> {{ movie.Year }}</p>
+          <p class="card-text"><b>Genre:</b> {{ movie.Genre }}</p>
+          <p class="card-text"><b>Plot:</b> {{ movie.Plot }}</p>
+        </div>
+      </div>
       <button type="button" class="btn btn-danger" (click)="goBack()">Voltar</button>
     </div>
+
   </div>
+</div>

@@ -1,6 +1,11 @@
 .card{
     margin: 0 auto;
     padding: 4px;
+    max-width: 680px;
+}
+
+.card img {
+    padding: 8px;
 }
 
 .movie-title{
@@ -8,7 +13,3 @@
     font-weight: bold;
     color: crimson;
 } 
-
-.card img {
-    padding: 8px;
-}
