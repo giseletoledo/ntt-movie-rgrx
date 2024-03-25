@@ -6,9 +6,14 @@ import { MoviesState } from './movies.reducer';
 export const selectMoviesState = createFeatureSelector<AppState, MoviesState>('movies');
 
 // Em seguida, criamos o seletor para extrair a lista de filmes do estado dos filmes
-export const selectMovies = createSelector(
+export const selectAllMovies = createSelector(
   selectMoviesState,
   (state: MoviesState) => state.movies
+);
+
+export const selectMoviesByTitle = (title: string) => createSelector(
+  selectMoviesState, // Seleciona o estado de filmes
+  (moviesState: MoviesState) => moviesState.movies.filter(movie => movie.Title.includes(title))
 );
 
 

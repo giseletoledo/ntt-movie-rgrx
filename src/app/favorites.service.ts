@@ -47,6 +47,7 @@ export class FavoritesService {
     return this.favorites.filter(favorite => favorite.isFavorite).map(favorite => favorite.imdbID);
   }
 
+
   getFavorites(movies: Movie[]): Movie[] {
     const favoriteIDs = this.getFavoriteIDs();
     return movies.filter((movie: Movie) => favoriteIDs.includes(movie.imdbID));

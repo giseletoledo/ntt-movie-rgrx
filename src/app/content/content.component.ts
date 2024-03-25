@@ -1,44 +1,46 @@
 import { Movie } from '../core/movie';
-import { Observable } from 'rxjs';
+import { Observable, debounceTime, distinctUntilChanged } from 'rxjs';
 import { Store, select } from '@ngrx/store';
-import { selectAllMovies, selectMovies } from '../movies.selectors';
+import { Component, OnInit } from '@angular/core';
+import { FavoritesService } from '../favorites.service';
+import { selectFavoriteMovies } from '../favorites.selectors';
+import { AppState } from '../app.reducer';
 import { loadMovies } from '../movies.actions';
-import { Component } from '@angular/core';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-content',
   templateUrl: './content.component.html',
   styleUrl: './content.component.css'
 })
-export class ContentComponent {
-  movies$: Observable<Movie[]> | undefined;
-  displayMovies$: Observable<Movie[]> | undefined;
-  movieTitle: string = ''; 
-  isFilterActive: boolean = false;
 
-  constructor(private store: Store) { }
+  export class ContentComponent implements OnInit {
 
+    displayMovies$: Observable<Movie[]> | undefined;
+    favoriteMovies$: Observable<Movie[]> | undefined;
+    isFilterActive: boolean = false;
+    searchControl = new  FormControl('');
 
-  ngOnInit(): void {
-    this.fetchMovies();
-    this.movies$ = this.store.pipe(select(selectAllMovies));
-
-
-    this.displayMovies$ = this.store.pipe(select(selectFavoriteMovies));
-  }
- 
-  fetchMovies(): void {
-    if (this.movieTitle) {
-      this.store.dispatch(loadMovies({ title: this.movieTitle }));
+    ngOnInit(): void {
+        this.favoriteMovies$ = this.store.pipe(select(selectFavoriteMovies, this.favoritesService));
     }
-  }
+   
+    constructor(
+      private store: Store<AppState>,
+      private favoritesService: FavoritesService
+    ) {}
 
-
-  toggleFavoritesFilter(): void {
-    this.isFilterActive = !this.isFilterActive;
-  }
-}
-function selectFavoriteMovies(state: object): Movie[] {
-  throw new Error('Function not implemented.');
-}
+    fetchMovies(): void {
+      const searchTerm = this.searchControl.value
+      if (searchTerm) {
+        console.log("clicou");
+        console.log(searchTerm);
+        this.store.dispatch(loadMovies({ title: searchTerm }));
+      }
+    }
+  
+    toggleFavoritesFilter(): void {
+      this.isFilterActive = !this.isFilterActive;
+    }
+  }  
 
