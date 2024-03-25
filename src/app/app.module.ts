@@ -11,11 +11,13 @@ import { FormsModule } from '@angular/forms';
 import { HttpClientModule } from '@angular/common/http';
 import { MovieDetailComponent } from './movie-detail/movie-detail.component';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
-import { MatDialogModule } from '@angular/material/dialog';
 import { FavoriteComponent } from './favorite/favorite.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { ContentgroupComponent } from './contentgroup/contentgroup.component';
 import { StoreModule } from '@ngrx/store';
+import { moviesReducer } from './movies.reducer';
+import { favoritesReducer } from './favorites.reducer';
+
 
 @NgModule({
   declarations: [
