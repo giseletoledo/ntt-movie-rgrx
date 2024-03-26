@@ -3,7 +3,7 @@ import { addFavorite, removeFavorite } from './favorites.actions';
 import { Movie } from './core/movie';
 
 export interface FavoritesState {
-  favorites: Movie[];
+  favorites: string[]; // Agora armazena apenas os IDs dos filmes favoritos
 }
 
 export const initialState: FavoritesState = {
@@ -12,6 +12,14 @@ export const initialState: FavoritesState = {
 
 export const favoritesReducer = createReducer(
   initialState,
-  on(addFavorite, (state, { movie }) => ({ ...state, favorites: [...state.favorites, movie] })),
-  on(removeFavorite, (state, { imdbID }) => ({ ...state, favorites: state.favorites.filter(movie => movie.imdbID !== imdbID) }))
+  on(addFavorite, (state, { imdbID }) => ({
+    ...state,
+    favorites: [...state.favorites, imdbID]
+  })),
+  on(removeFavorite, (state, { imdbID }) => ({
+    ...state,
+    favorites: state.favorites.filter(id => id !== imdbID)
+  }))
 );
+
+

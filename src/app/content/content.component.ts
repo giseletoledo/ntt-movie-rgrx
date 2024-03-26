@@ -1,5 +1,5 @@
 import { Movie } from '../core/movie';
-import { Observable, debounceTime, distinctUntilChanged } from 'rxjs';
+import { Observable, debounceTime, distinctUntilChanged, tap } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import { FavoritesService } from '../favorites.service';
 import { selectFavoriteMovies } from '../favorites.selectors';
@@ -22,27 +22,38 @@ import { selectAllMovies } from '../movies.selectors';
     isFilterActive: boolean = false;
     searchControl = new  FormControl('');
 
-    ngOnInit(): void {
-        this.displayMovies$ = this.store.pipe(select(selectAllMovies));
-        this.favoriteMovies$ = this.store.pipe(select(selectFavoriteMovies, this.favoritesService));
-    }
-   
     constructor(
       private store: Store<AppState>,
       private favoritesService: FavoritesService
     ) {}
 
+
+    ngOnInit(): void {
+        this.displayMovies$ = this.store.pipe(select(selectAllMovies));
+        this.favoriteMovies$ = this.store.pipe(select(selectFavoriteMovies, this.favoritesService),
+        tap(() =>{
+          this.favoritesService.saveFavoritesToLocalStorage();
+        }));
+    }
+   
+    
     fetchMovies(): void {
       const searchTerm = this.searchControl.value
       if (searchTerm) {
-        console.log("clicou");
-        console.log(searchTerm); 
+        //console.log("clicou");
+        //console.log(searchTerm); 
         this.store.dispatch(loadMovies({ title: searchTerm }));
       }
     }
   
     toggleFavoritesFilter(): void {
       this.isFilterActive = !this.isFilterActive;
+      if (this.isFilterActive) {
+        this.favoriteMovies$ = this.store.pipe(select(selectFavoriteMovies, this.favoritesService));
+      } else {
+        this.favoriteMovies$ = this.store.pipe(select(selectAllMovies));
+      }
     }
+  
   }  
 

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Actions, ofType, createEffect } from '@ngrx/effects';
-import { tap } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 import { FavoritesService } from './favorites.service';
 import { addFavorite, removeFavorite } from './favorites.actions';
 
@@ -12,14 +12,25 @@ export class FavoritesEffects {
     private favoritesService: FavoritesService
   ) {}
 
-  persistFavorites$ = createEffect(() =>
+  persistAddFavorite$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(addFavorite, removeFavorite),
-      tap(() => {
-        const favorites = this.favoritesService.getFavoriteIDs();
-        //this.favoritesService.saveFavoritesToLocalStorage(favorites);
+      ofType(addFavorite),
+      tap(action => {
+        this.favoritesService.addToFavorites(action.imdbID);
+      })
+    ),
+    { dispatch: false }
+  );
+
+  persistRemoveFavorite$ = createEffect(() =>
+    this.actions$.pipe(
+      ofType(removeFavorite),
+      tap(action => {
+        this.favoritesService.removeFromFavorites(action.imdbID);
       })
     ),
     { dispatch: false }
   );
 }
+
+

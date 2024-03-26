@@ -43,8 +43,7 @@ import { FavoritesEffects } from './favorites.effects';
      name: 'NgRx NTTMOVIE',
    }),
 
-    EffectsModule.forRoot([MovieEffects]),
-    EffectsModule.forRoot([FavoritesEffects]),
+    EffectsModule.forRoot([MovieEffects, FavoritesEffects]),
   ],
   providers: [
     {provide: LocationStrategy, useClass: HashLocationStrategy},

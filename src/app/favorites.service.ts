@@ -23,20 +23,23 @@ export class FavoritesService {
   }
 
   addToFavorites(imdbID: string): void {
+    console.log(imdbID)
     const existingFavorite = this.favorites.find(
       (favorite) => favorite.imdbID === imdbID
     );
+
     if (existingFavorite) {
       existingFavorite.isFavorite = true;
     } else {
+      console.log(imdbID)
       this.favorites.push({ imdbID, isFavorite: true });
     }
-    this.saveFavorites();
+    this.saveFavoritesToLocalStorage();
   }
 
   removeFromFavorites(imdbID: string): void {
     this.favorites = this.favorites.filter((favorite) => favorite.imdbID !== imdbID);
-    this.saveFavorites();
+    this.saveFavoritesToLocalStorage();
   }
 
   isFavorite(imdbID: string): boolean {
@@ -59,7 +62,8 @@ export class FavoritesService {
     return movies.filter(movie => favoriteIDs.includes(movie.imdbID));
   }
 
-  private saveFavorites(): void {
+  saveFavoritesToLocalStorage(): void {
+    console.log(this.favorites)
     localStorage.setItem('favoriteMovies', JSON.stringify(this.favorites));
   }
  

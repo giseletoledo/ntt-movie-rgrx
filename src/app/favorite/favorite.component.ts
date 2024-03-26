@@ -1,25 +1,28 @@
 import { Component, Input } from '@angular/core';
-import { FavoritesService } from '../favorites.service';
+import { Store } from '@ngrx/store';
+import { AppState } from '../app.reducer';
+import { addFavorite, removeFavorite } from '../favorites.actions';
 
 @Component({
   selector: 'app-favorite',
   templateUrl: './favorite.component.html',
-  styleUrl: './favorite.component.css'
+  styleUrls: ['./favorite.component.css']
 })
 export class FavoriteComponent {
   @Input() isFavorite: boolean = false;
   @Input() imdbID: string = '';
 
+  constructor(private store: Store<AppState>) {}
 
-  constructor(private favoritesService: FavoritesService) {}
-
-toggleFavorite(): void {
-  this.isFavorite = !this.isFavorite;
-  if (this.isFavorite) {
-    this.favoritesService.addToFavorites(this.imdbID);
-  } else {
-    this.favoritesService.removeFromFavorites(this.imdbID);
+  toggleFavorite(): void {
+    this.isFavorite = !this.isFavorite;
+    if (this.isFavorite) {
+      this.store.dispatch(addFavorite({ imdbID: this.imdbID }));
+    } else {
+      this.store.dispatch(removeFavorite({ imdbID: this.imdbID }));
+    }
   }
 }
 
-}
+
+
