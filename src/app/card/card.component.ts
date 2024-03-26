@@ -1,21 +1,35 @@
-import { Component, ElementRef, EventEmitter, Input, Output, TemplateRef, ViewChild } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Movie } from '../core/movie';
+import { FavoritesService } from '../favorites.service';
 
 @Component({
   selector: 'app-card',
   templateUrl: './card.component.html',
-  styleUrl: './card.component.css',
+  styleUrls: ['./card.component.css'],
 })
-export class CardComponent {
-  @Input() imageUrl: string = ''; 
-  @Input() title: string = ''; 
-  @Input() year: string = ''; 
-  @Input() isFavorite: boolean = false;
-  @Input() imdbID: string = '';
+export class CardComponent implements OnInit {
   @Input() movie: Movie | undefined;
-  selectedMovie: Movie | undefined;
+  isFavorite: boolean = false;
 
-  onMovieSelected(movie: Movie) {
-    this.selectedMovie = movie; 
-  } 
+  constructor(private favoritesService: FavoritesService) {}
+
+  ngOnInit(): void {
+    if (this.movie) {
+      this.isFavorite = this.favoritesService.isFavorite(this.movie.imdbID);
+    }
+  }
+
+  toggleFavorite(): void {
+    if (this.movie) {
+      if (this.isFavorite) {
+        this.favoritesService.removeFromFavorites(this.movie.imdbID);
+      } else {
+        this.favoritesService.addToFavorites(this.movie.imdbID);
+      }
+      this.isFavorite = !this.isFavorite;
+    }
+  }
 }
+
+
+

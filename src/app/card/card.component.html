@@ -1,8 +1,8 @@
 <div class="card mb-2 mt-2">
-  <img class="card-img-top" [src]="imageUrl" alt="Poster do filme">
+  <img class="card-img-top" [src]="movie?.Poster" alt="Poster do filme">
   <div class="card-body">
-    <h2 class="card-title">{{ title }}</h2>
-    <p class="card-text">{{ year }}</p>
+    <h2 class="card-title">{{ movie?.Title }}</h2>
+    <p class="card-text">{{ movie?.Year }}</p>
     <button class="btn btn-primary" [routerLink]="['/movies', movie?.imdbID]">Detalhes</button>
     <app-favorite [imdbID]="movie?.imdbID ?? 'No imdbID'" [isFavorite]="isFavorite"></app-favorite>
   </div>
