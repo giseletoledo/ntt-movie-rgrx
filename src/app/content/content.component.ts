@@ -49,9 +49,9 @@ import { selectAllMovies } from '../movies.selectors';
     toggleFavoritesFilter(): void {
       this.isFilterActive = !this.isFilterActive;
       if (this.isFilterActive) {
-        this.favoriteMovies$ = this.store.pipe(select(selectFavoriteMovies, this.favoritesService));
+        this.displayMovies$ = this.favoriteMovies$
       } else {
-        this.favoriteMovies$ = this.store.pipe(select(selectAllMovies));
+        this.displayMovies$ = this.store.pipe(select(selectAllMovies));
       }
     }
   
